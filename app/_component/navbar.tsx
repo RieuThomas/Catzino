@@ -4,6 +4,7 @@ const liens = [
   { href: "/casino", label: "Casino" },
   { href: "/empire", label: "Empire" },
   { href: "/catpack", label: "CatPack" },
+  { href: "/signin", label: "Se connecter"}
 ];
 
 export default function Navbar() {
