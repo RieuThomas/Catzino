@@ -25,44 +25,53 @@ export default function Signup() {
     }
 
     if(data.user) {
-    const { error: insertError } = await supabase
-    .from('users')
-    .insert({ nom: name, auth_id: data.user.id, avatar_url: urlAvatar })
+      const { error: insertError } = await supabase
+      .from('users')
+      .insert({ nom: name, auth_id: data.user.id, avatar_url: urlAvatar })
 
+      if (insertError) {
+            setError(insertError.message)
+            return
+        }
     }
-    
+
     router.push('/')
   }
 
+
   return (
-    <main>
-      <form action="submit" onSubmit={handleSignup}>
+    <main className="flex flex-col justify-center items-center h-screen">
+      <form action="submit" onSubmit={handleSignup} className="flex flex-col items-center gap-8 ">
         <input type="text" 
         value={urlAvatar}
         onChange={(e) => setUrlAvatar(e.target.value)}
-        placeholder="Avatar"/>
+        placeholder="Avatar"
+        className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
         <input 
         type="text" 
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Nom"/>
+        placeholder="Nom"
+        className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
         <input 
         type="text" 
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"/>
+        placeholder="Email"
+        className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
         <input 
         type="password" 
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"/>
+        placeholder="Password"
+        className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
-        <button type="submit">S'inscrire</button>
+        <button type="submit" className="border border-[var(--yel)] w-[400px] h-[40px] p-8px">S'inscrire</button>
       </form>
-      <div>
+      <div className="flex justify-center">
         <Link href="/signin"> Vous avez déjà un compte ? Connectez-vous !</Link>
       </div>
     </main>);
