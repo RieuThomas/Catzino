@@ -1,0 +1,52 @@
+{
+  "paytable": [
+    {
+      "symbol": "kibble",
+      "count": 3,
+      "multiplier": 2,
+      "name": "Triple Croquette"
+    },
+    {
+      "symbol": "fish",
+      "count": 3,
+      "multiplier": 3,
+      "name": "Festin de Poisson"
+    },
+    {
+      "symbol": "yarn",
+      "count": 3,
+      "multiplier": 5,
+      "name": "Pelote Infinie"
+    },
+    {
+      "symbol": "box",
+      "count": 3,
+      "multiplier": 8,
+      "name": "Carton Parfait"
+    },
+    {
+      "symbol": "sofa",
+      "count": 3,
+      "multiplier": 12,
+      "name": "Canapé Royal"
+    },
+    {
+      "symbol": "cat",
+      "count": 3,
+      "multiplier": 20,
+      "name": "Triple Miaou"
+    },
+    {
+      "symbol": "royal_cat",
+      "count": 3,
+      "multiplier": 50,
+      "name": "Roi des Chats"
+    },
+    {
+      "symbol": "golden_cat",
+      "count": 3,
+      "multiplier": 250,
+      "name": "CATPOT"
+    }
+  ]
+}

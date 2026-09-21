@@ -1,0 +1,29 @@
+{
+  "rarities": [
+    {
+      "id": "common",
+      "name": "Commun",
+      "order": 1
+    },
+    {
+      "id": "rare",
+      "name": "Rare",
+      "order": 2
+    },
+    {
+      "id": "epic",
+      "name": "Épique",
+      "order": 3
+    },
+    {
+      "id": "legendary",
+      "name": "Légendaire",
+      "order": 4
+    },
+    {
+      "id": "mythic",
+      "name": "Mythique",
+      "order": 5
+    }
+  ]
+}

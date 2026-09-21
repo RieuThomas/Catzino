@@ -1,0 +1,226 @@
+{
+  "cats": [
+    {
+      "id": "michel",
+      "name": "Michel",
+      "rarity": "common",
+      "passive_income": 1,
+      "unlock": {
+        "type": "default",
+        "value": 0
+      },
+      "description": "Il était déjà là quand tu es arrivé."
+    },
+    {
+      "id": "chaussette",
+      "name": "Chaussette",
+      "rarity": "common",
+      "passive_income": 2,
+      "unlock": {
+        "type": "total_earned",
+        "value": 500
+      },
+      "description": "Ne porte aucune chaussette."
+    },
+    {
+      "id": "patapouf",
+      "name": "Patapouf",
+      "rarity": "common",
+      "passive_income": 3,
+      "unlock": {
+        "type": "spins",
+        "value": 25
+      },
+      "description": "La vitesse n'a jamais été une priorité."
+    },
+    {
+      "id": "jean_miaou",
+      "name": "Jean-Miaou",
+      "rarity": "common",
+      "passive_income": 4,
+      "unlock": {
+        "type": "total_earned",
+        "value": 1000
+      },
+      "description": "Un chat parfaitement normal. Probablement."
+    },
+    {
+      "id": "croquette",
+      "name": "Croquette",
+      "rarity": "common",
+      "passive_income": 5,
+      "unlock": {
+        "type": "spins",
+        "value": 50
+      },
+      "description": "Son nom résume assez bien ses ambitions."
+    },
+    {
+      "id": "maurice",
+      "name": "Maurice le Gros",
+      "rarity": "rare",
+      "passive_income": 10,
+      "unlock": {
+        "type": "total_earned",
+        "value": 5000
+      },
+      "description": "Optimisé horizontalement."
+    },
+    {
+      "id": "bernard",
+      "name": "Bernard le Borgne",
+      "rarity": "rare",
+      "passive_income": 15,
+      "unlock": {
+        "type": "spins",
+        "value": 100
+      },
+      "description": "Possède ses deux yeux. Le surnom est resté."
+    },
+    {
+      "id": "moustache",
+      "name": "Moustache",
+      "rarity": "rare",
+      "passive_income": 20,
+      "unlock": {
+        "type": "total_earned",
+        "value": 10000
+      },
+      "description": "Sa moustache possède probablement sa propre moustache."
+    },
+    {
+      "id": "gerard_iii",
+      "name": "Gérard III",
+      "rarity": "rare",
+      "passive_income": 30,
+      "unlock": {
+        "type": "building_level",
+        "value": 5
+      },
+      "description": "Personne ne sait ce qui est arrivé à Gérard I et II."
+    },
+    {
+      "id": "raymond",
+      "name": "Raymond",
+      "rarity": "rare",
+      "passive_income": 40,
+      "unlock": {
+        "type": "total_earned",
+        "value": 25000
+      },
+      "description": "Il juge chacune de tes décisions financières."
+    },
+    {
+      "id": "chad",
+      "name": "Chad le Chat",
+      "rarity": "epic",
+      "passive_income": 75,
+      "unlock": {
+        "type": "total_earned",
+        "value": 50000
+      },
+      "description": "Ne miaule pas. Les autres chats miaulent pour lui."
+    },
+    {
+      "id": "jean_michel",
+      "name": "Jean-Michel Moustache",
+      "rarity": "epic",
+      "passive_income": 100,
+      "unlock": {
+        "type": "spins",
+        "value": 500
+      },
+      "description": "Cadre supérieur du secteur de la croquette."
+    },
+    {
+      "id": "destructeur",
+      "name": "Destructeur de Canapé",
+      "rarity": "epic",
+      "passive_income": 150,
+      "unlock": {
+        "type": "specific_building_level",
+        "building": "sofa_factory",
+        "value": 5
+      },
+      "description": "IKEA le recherche activement."
+    },
+    {
+      "id": "patrick",
+      "name": "Patrick Sans Queue",
+      "rarity": "epic",
+      "passive_income": 250,
+      "unlock": {
+        "type": "total_earned",
+        "value": 250000
+      },
+      "description": "Possède une queue."
+    },
+    {
+      "id": "monsieur_miaou",
+      "name": "Monsieur Miaou",
+      "rarity": "epic",
+      "passive_income": 400,
+      "unlock": {
+        "type": "spins",
+        "value": 1000
+      },
+      "description": "On ne sait pas s'il s'agit de son prénom ou de son métier."
+    },
+    {
+      "id": "seigneur_ronron",
+      "name": "Seigneur Ronron",
+      "rarity": "legendary",
+      "passive_income": 750,
+      "unlock": {
+        "type": "total_earned",
+        "value": 1000000
+      },
+      "description": "Il était là avant l'invention du canapé."
+    },
+    {
+      "id": "robert",
+      "name": "Robert Mangeur de Mondes",
+      "rarity": "legendary",
+      "passive_income": 1250,
+      "unlock": {
+        "type": "buildings_at_level",
+        "level": 10,
+        "value": 3
+      },
+      "description": "Mange principalement des croquettes."
+    },
+    {
+      "id": "miao_zedong",
+      "name": "Miao Zedong",
+      "rarity": "legendary",
+      "passive_income": 2000,
+      "unlock": {
+        "type": "total_earned",
+        "value": 5000000
+      },
+      "description": "Président du comité central des chats."
+    },
+    {
+      "id": "empereur_moustache",
+      "name": "Empereur Moustache Ier",
+      "rarity": "legendary",
+      "passive_income": 5000,
+      "unlock": {
+        "type": "all_buildings_level",
+        "value": 10
+      },
+      "description": "Premier de son nom. Dernier selon le vétérinaire."
+    },
+    {
+      "id": "primordial",
+      "name": "Le Chat Primordial",
+      "rarity": "mythic",
+      "passive_income": 10000,
+      "unlock": {
+        "type": "total_earned",
+        "value": 100000000
+      },
+      "description": "Avant lui, il n'y avait que le vide. Et quelques poils."
+    }
+  ]
+}
