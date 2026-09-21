@@ -1,0 +1,15 @@
+{
+  "game": {
+    "name": "CATZINO",
+    "slogan": "Miaou ou jamais",
+    "currency": {
+      "name": "Croquette",
+      "plural": "Croquettes",
+      "symbol": "🫘"
+    },
+    "starting_balance": 100,
+    "rescue_amount": 10,
+    "offline_income_max_hours": 8,
+    "passive_income_tick_seconds": 1
+  }
+}
