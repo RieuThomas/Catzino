@@ -1,0 +1,58 @@
+{
+  "buildings": [
+    {
+      "id": "box_warehouse",
+      "name": "Entrepôt de cartons",
+      "icon": "📦",
+      "base_price": 500,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.05,
+      "max_level": 10
+    },
+    {
+      "id": "fish_shop",
+      "name": "Poissonnerie",
+      "icon": "🐟",
+      "base_price": 2000,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.075,
+      "max_level": 10
+    },
+    {
+      "id": "yarn_factory",
+      "name": "Usine à pelotes",
+      "icon": "🧶",
+      "base_price": 10000,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.10,
+      "max_level": 10
+    },
+    {
+      "id": "sofa_factory",
+      "name": "Fabrique de canapés",
+      "icon": "🛋️",
+      "base_price": 50000,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.15,
+      "max_level": 10
+    },
+    {
+      "id": "kibble_industries",
+      "name": "Croquette Industries",
+      "icon": "🏭",
+      "base_price": 250000,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.20,
+      "max_level": 10
+    },
+    {
+      "id": "cat_corporation",
+      "name": "Cat Corporation",
+      "icon": "🏙️",
+      "base_price": 1000000,
+      "price_growth": 1.6,
+      "bonus_per_level": 0.25,
+      "max_level": 10
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "slot_machine": {
+    "id": "miaou_matic",
+    "name": "Miaou-Matic",
+    "reels": 3,
+    "starting_level": 1,
+    "max_level": 50,
+
+    "bets": [
+      1,
+      5,
+      10,
+      25,
+      50,
+      100
+    ],
+
+    "properties": {
+      "base_luck": 0,
+      "base_gain_multiplier": 1.0,
+      "base_rarity_bonus": 0,
+      "starting_max_bet": 100
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "symbols": [
+    {
+      "id": "kibble",
+      "name": "Croquette",
+      "icon": "🫘",
+      "weight": 30,
+      "rarity": "common"
+    },
+    {
+      "id": "fish",
+      "name": "Poisson",
+      "icon": "🐟",
+      "weight": 25,
+      "rarity": "common"
+    },
+    {
+      "id": "yarn",
+      "name": "Pelote",
+      "icon": "🧶",
+      "weight": 18,
+      "rarity": "common"
+    },
+    {
+      "id": "box",
+      "name": "Carton",
+      "icon": "📦",
+      "weight": 12,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "sofa",
+      "name": "Canapé",
+      "icon": "🛋️",
+      "weight": 8,
+      "rarity": "rare"
+    },
+    {
+      "id": "cat",
+      "name": "Chat",
+      "icon": "🐱",
+      "weight": 5,
+      "rarity": "rare"
+    },
+    {
+      "id": "royal_cat",
+      "name": "Chat Royal",
+      "icon": "👑",
+      "weight": 2,
+      "rarity": "legendary"
+    },
+    {
+      "id": "golden_cat",
+      "name": "Chat Doré",
+      "icon": "✨",
+      "weight": 1,
+      "rarity": "mythic"
+    }
+  ]
+}
