@@ -24,25 +24,29 @@ export default function Signin() {
   }
 
     return (
-        <div>
-            <form action="submit" onSubmit={handleSignin}>
+        <div className="flex flex-col justify-center items-center h-screen">
+            <form action="submit" onSubmit={handleSignin} className="flex flex-col items-center gap-8 ">
 
                 <input 
                 type="text" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"/>
+                placeholder="Email"
+                className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
                 <input 
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"/>
+                placeholder="Password"
+                className="border border-[var(--border)] w-[400px] h-[40px] p-8px"/>
 
-                <button type="submit">Se connecter</button>
+                <button type="submit" className="border border-[var(--yel)] w-[400px] h-[40px] p-8px">Se connecter</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
-
+          <div className="flex justify-center">
             <Link href='/signup'> Vous n'avez pas de compte ? Inscrivez-vous !</Link>
+          </div>
         </div>
     )
 }
