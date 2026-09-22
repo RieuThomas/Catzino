@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
 
+@theme {
+  --font-lilitaone: 'Lilita One', 'Fredoka', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-spacemono: 'Space Mono', monospace;
+}
+
 :root {
   --mint:#06D6A0;
   --red: #F21B3F;
