@@ -41,14 +41,25 @@ export default function Signup() {
       const newUserId = result.data.id
 
       if(newUserId) {
-        const result = await supabase
+        const resultCat = await supabase
         .from('player_cats')
         .insert({user_id: newUserId, cat_id: 'michel'})
 
-        const catError = result.error
+        const catError = resultCat.error
 
         if(catError) {
           setError(catError.message)
+          return
+        }
+
+        const resultPlayer = await supabase
+        .from('player_state')
+        .insert({id: newUserId})
+
+        const playerError = resultPlayer.error
+
+        if(playerError) {
+          setError(playerError.message)
           return
         }
       }

@@ -6,11 +6,10 @@ import { useUser } from '@/context/userContext'
 
 export default function catList() {
     const catArray = cats
-    const [catsOwned, setCatsOwned] = useState(0)
+    const [ownedCats, setOwnedCats] = useState<{ cat_id: string }[]>([])
     const [error, setError] = useState('')
     const [passivCroquette, setPassivCroquette] = useState(0)
     const { user } = useUser()
-
 
     useEffect(() => {
         async function getCats() {
@@ -39,12 +38,13 @@ export default function catList() {
 
             if(data) {
                 let croquette = 0
-                setCatsOwned(data.length)
+                setOwnedCats(data)
                 data.forEach(dataCat => {
                     const catInArray = catArray.cats.find((cat) => cat.id === dataCat.cat_id)
 
                     if(catInArray) {   
-                        croquette += catInArray.passive_income                   } 
+                        croquette += catInArray.passive_income                  
+                    } 
                           
                 });
                 setPassivCroquette(croquette)
@@ -54,18 +54,16 @@ export default function catList() {
 
     }, [user])
 
-    
-
     return (
         <section>
             <h1 className="font-['Space_Mono',monospace] text-[16px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
-                Collection · {catsOwned}/{catArray.cats.length} · +{passivCroquette} 🫘/s cumulé
+                Collection · {ownedCats.length}/{catArray.cats.length} · +{passivCroquette} 🫘/s cumulé
             </h1>
 
             <div className='grid grid-cols-[repeat(auto-fill,220px)] gap-[20px] justify-center'>
             {catArray.cats.map((cat) => (
                 <div key={cat.id}>
-                    <CatCard catInfo = {cat}/>
+                    <CatCard catInfo = {cat} ownedCats = {ownedCats}/>
                 </div>
                 ))}
             </div>

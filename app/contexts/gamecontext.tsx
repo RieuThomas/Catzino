@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useRef, useState, ReactNode } fro
 import { supabase } from "@/lib/supabase";
 import databuildings from "@/app/_data/buildings.json";
 import datacats from "@/app/_data/cats.json"; 
+import { Cat } from "../catpack/_model/CatModels";
 
 type GameContextType = {
     currency: number;
@@ -28,6 +29,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const [totalMise, setTotalMise] = useState(0);
     const [spin, setSpin] = useState(0);
     const [cats, setCats] = useState<string[]>([]);
+
 
     const currencyRef = useRef(currency);
     const levelsRef = useRef(levels);
@@ -73,6 +75,30 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     const addSpin = () => {
         setSpin((prev) => prev + 1);
+    function unlockCat(cat: Cat): boolean {
+        let isUnlock: boolean = false
+
+        switch (cat.unlock.type) {
+            case "total_earned":
+                isUnlock = totalGagne > cat.unlock.value
+                break
+            case "spins":
+                isUnlock = false
+                break
+            case "building_level":
+                isUnlock = false // à implémenter plus tard
+                break
+            case "specific_building_level":
+                isUnlock = false // à implémenter plus tard
+                break
+            case "all_buildings_level":
+                isUnlock = false // à implémenter plus tard
+                break
+            default:
+                isUnlock = false
+        }
+
+        return isUnlock
     }
 
     useEffect(() => {
@@ -168,6 +194,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
                     nb_spin: totalSpinRef.current,
                 })
                 .eq("id", userId);
+
+
+                // code pour debloquer un chat
 
             const buildingsRows = Object.entries(levelsRef.current).map(([building_id, niveau]) => ({
                 user_id: userId,
