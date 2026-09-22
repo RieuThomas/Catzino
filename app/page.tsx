@@ -16,7 +16,6 @@ export default function Home() {
   const [rouleaux, setRouleaux] = useState<Symbols[]>([])
   const [croquette, setCroquette] = useState(0)
   const [spinning, setSpinning] = useState(false)
-  const [lastGain, setLastGain] = useState(0)
   const [lastThreeGain, setLastThreeGain] = useState<number[]>([])
 
   function getOneSymbol() {
