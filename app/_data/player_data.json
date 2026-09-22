@@ -9,6 +9,7 @@
     "croquettes": 0,
     "total_gagné": 0,
     "total_misé": 0,
+    "nb_spin" : 0,
     "created_at": null,
     "updated_at": null
   },
