@@ -25,14 +25,33 @@ export default function Signup() {
     }
 
     if(data.user) {
-      const { error: insertError } = await supabase
+      const result = await supabase
       .from('users')
       .insert({ nom: name, auth_id: data.user.id, avatar_url: urlAvatar })
+      .select()
+      .single()
 
+      const insertError = result.error
+      
       if (insertError) {
-            setError(insertError.message)
-            return
+        setError(insertError.message)
+        return
+      }
+      
+      const newUserId = result.data.id
+
+      if(newUserId) {
+        const result = await supabase
+        .from('player_cats')
+        .insert({user_id: newUserId, cat_id: 'michel'})
+
+        const catError = result.error
+
+        if(catError) {
+          setError(catError.message)
+          return
         }
+      }
     }
 
     router.push('/')
