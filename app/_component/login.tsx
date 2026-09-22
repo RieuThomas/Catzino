@@ -23,9 +23,15 @@ export default function Login() {
         router.push('/signin')
     }
 
+    const classCoDeco = `flex items-center justify-center px-[22px] py-[8px] cursor-pointor rounded-[999px] text-[#0d0d1a] font-lilitaone font-bold h-max ${
+        user && !loading ? "bg-[#fcdc4d] border-3 border-[#b89600] shadow-[3px_3px_0px_0px_#b89600]" 
+        : "bg-[#06d6a0] border-3 border-[#04a87d] shadow-[3px_3px_0px_0px_#027a5c]"
+    }`
+
     return (
+        
         user && !loading 
-        ? <button type="button" onClick={handleLogout}>Deconnexion</button> 
-        : <Link href="/signin">Se Connecter</Link>
+        ? <button type="button" onClick={handleLogout} className={classCoDeco}>Deconnexion</button> 
+        : <Link href="/signin" className={classCoDeco}>Se Connecter</Link>
     )
 }
