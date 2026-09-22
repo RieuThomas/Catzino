@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const liens = [
-  { href: "/casino", label: "Casino" },
+  { href: "/", label: "Casino" },
   { href: "/empire", label: "Empire" },
   { href: "/catpack", label: "CatPack" },
 ];

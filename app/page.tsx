@@ -1,8 +1,166 @@
+"use client"
+import { useEffect, useState } from 'react';
+import symbols from './_data/symbols.json'
+import slotMachine from './_data/slot-machine.json'
+
+interface Symbols {
+    id: string;
+    name: string;
+    icon: string;
+    weight: number;
+    rarity: string;
+}
 
 export default function Home() {
+  const [mise, setMise] = useState(0)
+  const [rouleaux, setRouleaux] = useState<Symbols[]>([])
+  const [croquette, setCroquette] = useState(0)
+  const [spinning, setSpinning] = useState(false)
+  const [lastThreeGain, setLastThreeGain] = useState<number[]>([])
+
+  function getOneSymbol() {
+    const index = Math.floor(Math.random() * symbols.symbols.length)
+    return symbols.symbols[index]
+  }
+
+  function updateLastThreeGains(gain: number) {
+  setLastThreeGain((prev) => {
+    const updated = [gain, ...prev]
+    return updated.slice(0, 3) 
+  })
+}
+
+  function calculatingGain(finalSymbols: Symbols[]) {
+    if (finalSymbols.length !== 3) return 0
+    const [a, b, c] = finalSymbols
+    if (a.id === b.id && b.id === c.id) {  
+      return Math.floor(100 / a.weight) * mise
+    }
+    return 0
+  }
+
+  function playSound() {
+    const audio = new Audio('/sounds/miaule.mp3')
+    audio.play()
+  }
+
+  function spin() {
+    
+    if(spinning || mise === 0 ) {
+      return
+    }
+
+    playSound()
+    setCroquette((prev) => prev - mise)
+    setSpinning(true)
+
+    setTimeout(() => {
+    const finalSymbols = Array.from({ length: 3 }, () => getOneSymbol())
+    setRouleaux(finalSymbols)
+    setSpinning(false)
+
+    const gain = calculatingGain(finalSymbols)
+    if (gain > 0) {
+      updateLastThreeGains(gain)
+      setCroquette((prev) => prev + gain)
+    } else {
+      updateLastThreeGains(-mise)
+    }
+  }, 700)
+  }
+
   return (
 <div>
-  <h1>Casino</h1>
+    <div className='flex flex-row justify-evenly'>
+      <div className='border-3 border-[var(--lav)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--lav)] flex flex-col items-center'>
+        <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase">
+          machine à sous · 3 rouleaux
+        </p>
+   
+        <div className='flex flex-row gap-4'>
+          {rouleaux.map((rouleau, index) => (
+            <div key={index} className='flex flex-col justify-center gap-3 items-center border w-[200px] h-[200px] rounded-2xl border-4  border-[var(--border)]  overflow-hidden'>
+              <div
+                className='flex flex-col justify-center items-center w-[200px] h-[200px] transition-transform duration-600 ease-in-out '
+                style={{
+                  transform: spinning ? 'translateY(+600px)' : 'translateY(0px)',
+                  transitionDelay: spinning ? `${index * 200}ms` : '0ms',
+                }}
+              >
+                <p className="text-5xl">{rouleau.icon}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {lastThreeGain.length > 0 && !spinning &&
+          <p className={lastThreeGain[0] > 0 
+            ? 'text-[var(--mint)] mt-4 font-nunito border-dashed border-3 border-(--mint) rounded-3xl w-80 p-5 text-center' 
+            : 'text-[var(--red)] mt-4 font-nunito border-dashed border-3 border-(--red) rounded-3xl w-80 p-5 text-center'} > 
+            {lastThreeGain[0] < 0 ? '💀' : '🎉'} {lastThreeGain[0]} 🫘
+          </p>
+        }
+      </div>
+      <div className='flex flex-col gap-8 w-[400px]'>
+        <div className='bg-(--yel) rounded-[16px] h-30 flex flex-col items-center justify-center gap-4'>
+          <button
+          className="text-black text-4xl font-['Space_Mono',monospace] font-black cursor-pointer"
+          type='button' 
+          onClick={spin}
+          disabled={spinning}>
+            MIAULE
+          </button>
+          <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
+            espace = spin · lock 800ms
+          </p>
+        </div>
+        <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)]'>
+          <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase ">
+            log des 3 derniers spins
+          </p>
+          <div >
+            {lastThreeGain && lastThreeGain.map((gain) => (
+              <span className={gain > 0  
+                ? 'text-[var(--mint)] pr-10'
+                : 'text-[var(--red)] pr-10'}
+              >{gain}</span>
+            ))}
+          </div>
+          <div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className='m-5'>
+      <h2 className="font-['Space_Mono',monospace] text-[16px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
+        Mise - 1 seul sélecteur
+      </h2>
+      <div className='flex flex-row gap-4'>
+      {slotMachine.slot_machine.bets.map((bet) => {
+        const isSelectioned = mise === bet
+        return <button
+            className={isSelectioned 
+              ? "rounded-full border-[var(--yel)] bg-[var(--yel)] border-3 h-20 w-20 cursor-pointer text-black font-['Space_Mono',monospace] font-extrabold text-base shadow-[3px_3px_0px_rgb(184,150,0)]" 
+              : 'rounded-full border-[var(--border)] border-3 h-20 w-20 cursor-pointer'}
+            type='button' 
+            key={bet} 
+            onClick={() => setMise(bet)}>
+              {bet}
+          </button>
+      })}
+      </div>
+    </div>
+
+    <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)] w-200 m-5'>
+      <h2 className="font-['Space_Mono',monospace] text-[16px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
+        table des gain · statistiques
+      </h2>
+      {symbols.symbols.map((symbol) => (
+        <span key={symbol.id}>     {symbol.icon}x3 = {Math.floor(100/symbol.weight)}  /  </span>
+      ))}
+    </div>
+  
 
 </div>
   

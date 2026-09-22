@@ -43,10 +43,8 @@ export default function catList() {
                 data.forEach(dataCat => {
                     const catInArray = catArray.cats.find((cat) => cat.id === dataCat.cat_id)
 
-
                     if(catInArray) {   
-                        croquette += catInArray.passive_income
-                        console.log(croquette)                    } 
+                        croquette += catInArray.passive_income                   } 
                           
                 });
                 setPassivCroquette(croquette)
