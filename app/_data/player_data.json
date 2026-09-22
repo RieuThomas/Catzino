@@ -1,0 +1,17 @@
+{
+  "user": {
+    "id": null,
+    "auth_id": null,
+    "nom": "",
+    "avatar_url": null
+  },
+  "player_state": {
+    "croquettes": 0,
+    "total_gagné": 0,
+    "total_misé": 0,
+    "created_at": null,
+    "updated_at": null
+  },
+  "player_buildings": [],
+  "player_cats": []
+}
