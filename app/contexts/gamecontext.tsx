@@ -16,6 +16,7 @@ type GameContextType = {
     addCurrency: (amount: number) => void;
     spendCurrency: (amount: number) => void;
     placeBet: (amount: number) => void;
+    addSpin: () => void;
 };
 const GameContext = createContext<GameContextType | null>(null);
 
@@ -25,6 +26,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const [userId, setUserId] = useState<number | null>(null);
     const [totalGagne, setTotalGagne] = useState(0);
     const [totalMise, setTotalMise] = useState(0);
+    const [spin, setSpin] = useState(0);
     const [cats, setCats] = useState<string[]>([]);
 
     const currencyRef = useRef(currency);
@@ -32,12 +34,14 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const totalGagneRef = useRef(totalGagne);
     const totalMiseRef = useRef(totalMise);
     const catsRef = useRef(cats);
+    const totalSpinRef = useRef(spin);
 
     currencyRef.current = currency;
     levelsRef.current = levels;
     totalGagneRef.current = totalGagne;
     totalMiseRef.current = totalMise;
-    catsRef.current = cats; 
+    catsRef.current = cats;
+    totalSpinRef.current = spin;
 
     const upgradeBuilding = (buildingId: string) => {
         setLevels((prev) => ({
@@ -61,8 +65,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     const placeBet = (amount: number) => {
         setCurrency((prev) => prev - amount);
-        setTotalMise((prev) => prev + amount);
+        setTotalMise((prev) => {
+            console.log("placeBet : totalMise", prev, "->", prev + amount);
+            return prev + amount;
+        });
     };
+
+    const addSpin = () => {
+        setSpin((prev) => prev + 1);
+    }
 
     useEffect(() => {
         async function loadData() {
@@ -108,14 +119,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
             const { data: stateData } = await supabase
                 .from("player_state")
-                .select("croquettes, total_gagné, total_misé")
+                .select("croquettes, total_gagne, total_mise, nb_spin")
                 .eq("id", userRow.id)
                 .single();
 
             if (stateData) {
                 setCurrency(stateData.croquettes);
-                setTotalGagne(stateData.total_gagné);
-                setTotalMise(stateData.total_misé);
+                setTotalGagne(stateData.total_gagne);
+                setTotalMise(stateData.total_mise);
+                setSpin(stateData.nb_spin);
             }
         }
         loadData();
@@ -151,8 +163,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
                 .from("player_state")
                 .update({
                     croquettes: currencyRef.current,
-                    total_gagné: totalGagneRef.current,
-                    total_misé: totalMiseRef.current,
+                    total_gagne: totalGagneRef.current,
+                    total_mise: totalMiseRef.current,
+                    nb_spin: totalSpinRef.current,
                 })
                 .eq("id", userId);
 
@@ -161,6 +174,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
                 building_id,
                 niveau,
             }));
+            console.log("buildingsRows envoyées :", buildingsRows);
             if (buildingsRows.length > 0) {
                 await supabase.from("player_buildings").upsert(buildingsRows);
             }
@@ -179,7 +193,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
     return (
         <GameContext.Provider
-            value={{ currency, totalGagne, totalMise, levels, cats, upgradeBuilding, addCat, addCurrency, spendCurrency, placeBet }}
+            value={{ currency, totalGagne, totalMise, levels, cats, upgradeBuilding, addCat, addCurrency, spendCurrency, placeBet, addSpin}}
         >
             {children}
         </GameContext.Provider>

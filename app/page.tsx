@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import symbols from './_data/symbols.json'
 import slotMachine from './_data/slot-machine.json'
+import { useGame } from "@/app/contexts/gamecontext";
 
 interface Symbols {
     id: string;
@@ -12,11 +13,13 @@ interface Symbols {
 }
 
 export default function Home() {
-  const [mise, setMise] = useState(0)
+  const [mise, setMise] = useState(1)
   const [rouleaux, setRouleaux] = useState<Symbols[]>([])
   const [croquette, setCroquette] = useState(0)
   const [spinning, setSpinning] = useState(false)
   const [lastThreeGain, setLastThreeGain] = useState<number[]>([])
+
+  const {spendCurrency, addSpin, placeBet} = useGame();
 
   function getOneSymbol() {
     const index = Math.floor(Math.random() * symbols.symbols.length)
@@ -45,14 +48,14 @@ export default function Home() {
   }
 
   function spin() {
-    
     if(spinning || mise === 0 ) {
       return
     }
-
     playSound()
     setCroquette((prev) => prev - mise)
     setSpinning(true)
+
+    placeBet(mise)
 
     setTimeout(() => {
     const finalSymbols = Array.from({ length: 3 }, () => getOneSymbol())
@@ -62,12 +65,13 @@ export default function Home() {
     const gain = calculatingGain(finalSymbols)
     if (gain > 0) {
       updateLastThreeGains(gain)
-      setCroquette((prev) => prev + gain)
+      spendCurrency(-gain)
     } else {
       updateLastThreeGains(-mise)
     }
+    addSpin()
   }, 700)
-  }
+}
 
   return (
 <div>

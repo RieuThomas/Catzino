@@ -5,16 +5,16 @@ import CardSection from "./_component/cardsection";
 import BonusInfos from "./_component/bonusinfos";
 
 export default function EmpirePage() {
-const buildings = databuildings.buildings;
-const { currency, levels, cats, upgradeBuilding, spendCurrency } = useGame();
+  const buildings = databuildings.buildings;
+  const { currency, levels, cats, upgradeBuilding, spendCurrency } = useGame();
 
 const handleUpgrade = (building: (typeof buildings)[number]) => {
   const level = levels[building.id] ?? 0;
   if (level >= building.max_level) return;
-  const cost = Math.floor(building.base_price * building.price_growth ** level);
+    const cost = Math.floor(building.base_price * building.price_growth ** (level+1));
   if (currency < cost) return;
-  spendCurrency(cost);
-  upgradeBuilding(building.id);
+    spendCurrency(cost);
+    upgradeBuilding(building.id);
 };
 
 const buildingBonus = databuildings.buildings.reduce((total, building) => {
@@ -44,7 +44,7 @@ return (
           PANNEAU RECAP - LECTURE SEULE
         </p>
         <div className="flex flex-col gap-[10px]">
-          <BonusInfos text="bâtiments" value={buildingBonus*100} />
+          <BonusInfos text="bâtiments" value={Math.floor(buildingBonus*100)} />
           <BonusInfos text="chats" value={cats.length} />
           <div>
             <BonusInfos text="multiplier" value={Math.floor((1 + buildingBonus) * 100) / 100} />
