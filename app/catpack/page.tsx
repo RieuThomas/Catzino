@@ -10,7 +10,6 @@ export default function CatPackPage() {
   }, [])
 
   return <main>
-   <h1>CatPack</h1>
    <CatList/>
   </main>;
 }
