@@ -74,25 +74,29 @@ export function GameProvider({ children }: { children: ReactNode }) {
     };
 
     const addSpin = () => {
-        setSpin((prev) => prev + 1);
+        setSpin((prev) => prev + 1)
+    }
+
     function unlockCat(cat: Cat): boolean {
         let isUnlock: boolean = false
 
         switch (cat.unlock.type) {
             case "total_earned":
-                isUnlock = totalGagne > cat.unlock.value
+                isUnlock = totalGagneRef.current >= cat.unlock.value
                 break
             case "spins":
-                isUnlock = false
+                isUnlock = totalSpinRef.current >= cat.unlock.value
                 break
             case "building_level":
-                isUnlock = false // à implémenter plus tard
+                isUnlock = Object.values(levelsRef.current).some((lvl) => lvl >= cat.unlock.value)
                 break
             case "specific_building_level":
-                isUnlock = false // à implémenter plus tard
+                isUnlock = (levelsRef.current[cat.unlock.building!] ?? 0) >= cat.unlock.value
                 break
             case "all_buildings_level":
-                isUnlock = false // à implémenter plus tard
+                isUnlock = databuildings.buildings.every(
+                    (building) => (levelsRef.current[building.id] ?? 0) >= cat.unlock.value
+                )
                 break
             default:
                 isUnlock = false
@@ -105,6 +109,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
         async function loadData() {
             const { data: { user: authUser } } = await supabase.auth.getUser();
             if (!authUser) {
+                setUserId(null)
+                setCurrency(0)
+                setTotalGagne(0)
+                setTotalMise(0)
+                setSpin(0)
+                setCats([])
+                setLevels({})
                 return;
             }
 
@@ -157,6 +168,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
             }
         }
         loadData();
+
+            // ✅ Écoute les changements d'authentification (login, logout)
+        const { data: listener } = supabase.auth.onAuthStateChange(() => {
+            loadData();
+        });
+
+        return () => listener.subscription.unsubscribe();
     }, [])
 
     useEffect(() => {
@@ -195,8 +213,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
                 })
                 .eq("id", userId);
 
-
-                // code pour debloquer un chat
+            datacats.cats.forEach((cat) => {
+                if (!catsRef.current.includes(cat.id) && unlockCat(cat)) {
+                    addCat(cat.id)
+                }
+            })
 
             const buildingsRows = Object.entries(levelsRef.current).map(([building_id, niveau]) => ({
                 user_id: userId,
