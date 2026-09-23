@@ -19,7 +19,12 @@ export default function Home() {
   const [spinning, setSpinning] = useState(false)
   const [lastThreeGain, setLastThreeGain] = useState<number[]>([])
 
-  const {spendCurrency, addSpin, placeBet} = useGame();
+  const {spendCurrency, addSpin, placeBet, currency} = useGame();
+
+  useEffect(() => {
+    const initialSymbols = Array.from({ length: 3 }, () => getOneSymbol())
+    setRouleaux(initialSymbols)
+}, [])
 
   function getOneSymbol() {
     const index = Math.floor(Math.random() * symbols.symbols.length)
@@ -48,9 +53,10 @@ export default function Home() {
   }
 
   function spin() {
-    if(spinning || mise === 0 ) {
+    if(spinning || mise === 0 || currency < mise ) {
       return
     }
+
     playSound()
     setCroquette((prev) => prev - mise)
     setSpinning(true)
@@ -73,100 +79,101 @@ export default function Home() {
   }, 700)
 }
 
+const pClass = "font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase"
+
   return (
-<div>
-    <div className='flex flex-row justify-evenly'>
-      <div className='border-3 border-[var(--lav)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--lav)] flex flex-col items-center'>
-        <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase">
-          machine à sous · 3 rouleaux
-        </p>
-   
-        <div className='flex flex-row gap-4'>
-          {rouleaux.map((rouleau, index) => (
-            <div key={index} className='flex flex-col justify-center gap-3 items-center border w-[200px] h-[200px] rounded-2xl border-4  border-[var(--border)]  overflow-hidden'>
-              <div
-                className='flex flex-col justify-center items-center w-[200px] h-[200px] transition-transform duration-600 ease-in-out '
-                style={{
-                  transform: spinning ? 'translateY(+600px)' : 'translateY(0px)',
-                  transitionDelay: spinning ? `${index * 200}ms` : '0ms',
-                }}
-              >
-                <p className="text-5xl">{rouleau.icon}</p>
+    <div>
+        <div className='flex flex-row justify-evenly'>
+          <div className='border-3 border-[var(--lav)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--lav)] flex flex-col items-center min-h-[400px]'>
+            <p className={pClass}>
+              machine à sous · 3 rouleaux
+            </p>
+      
+            <div className='flex flex-row gap-4'>
+              {rouleaux.map((rouleau, index) => (
+                <div key={index} className='flex flex-col justify-center gap-3 items-center border w-[200px] h-[200px] rounded-2xl border-4  border-[var(--border)]  overflow-hidden'>
+                  <div
+                    className='flex flex-col justify-center items-center w-[200px] h-[200px] transition-transform duration-600 ease-in-out '
+                    style={{
+                      transform: spinning ? 'translateY(+600px)' : 'translateY(0px)',
+                      transitionDelay: spinning ? `${index * 200}ms` : '0ms',
+                    }}
+                  >
+                    <p className="text-5xl">{rouleau.icon}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {lastThreeGain.length > 0 && !spinning &&
+              <p className={lastThreeGain[0] > 0 
+                ? 'text-[var(--mint)] mt-4 font-nunito border-dashed border-3 border-(--mint) rounded-3xl w-80 p-5 text-center' 
+                : 'text-[var(--red)] mt-4 font-nunito border-dashed border-3 border-(--red) rounded-3xl w-80 p-5 text-center'} > 
+                {lastThreeGain[0] < 0 ? '💀' : '🎉'} {lastThreeGain[0]} 🫘
+              </p>
+            }
+          </div>
+          <div className='flex flex-col gap-8 w-[400px]'>
+            <button className='bg-(--yel) rounded-[16px] h-30 flex flex-col items-center justify-center gap-4 cursor-pointer'
+            type='button'
+            onClick={spin}
+            disabled={spinning}>
+              <p className="text-black text-4xl font-['Space_Mono',monospace] font-black ">
+                MIAULE
+              </p>
+              <p className={pClass}>
+                espace = spin · lock 800ms
+              </p>
+            </button>
+            <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)]'>
+              <p className={pClass}>
+                log des 3 derniers spins
+              </p>
+              <div >
+                {lastThreeGain && lastThreeGain.map((gain, index) => (
+                  <span key={index} className={gain > 0  
+                    ? 'text-[var(--mint)] pr-10'
+                    : 'text-[var(--red)] pr-10'}
+                  >{gain}</span>
+                ))}
+              </div>
+              <div>
+
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className='m-10 ml-20'>
+          <p className={pClass}>
+            Mise - 1 seul sélecteur
+          </p>
+          <div className='flex flex-row gap-4'>
+          {slotMachine.slot_machine.bets.map((bet) => {
+            const isSelectioned = mise === bet
+            return <button
+                className={isSelectioned 
+                  ? "rounded-full border-[var(--yel)] bg-[var(--yel)] border-3 h-20 w-20 cursor-pointer text-black font-['Space_Mono',monospace] font-extrabold text-base shadow-[3px_3px_0px_rgb(184,150,0)]" 
+                  : 'rounded-full border-[var(--border)] border-3 h-20 w-20 cursor-pointer'}
+                type='button' 
+                key={bet} 
+                onClick={() => setMise(bet)}>
+                  {bet}
+              </button>
+          })}
+          </div>
+        </div>
+
+        <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)] w-200 m-5 ml-20'>
+          <p className={pClass}>
+            table des gain · statistiques
+          </p>
+          {symbols.symbols.map((symbol) => (
+            <span key={symbol.id}> {symbol.icon}x3 = {Math.floor(100/symbol.weight)} / </span>
           ))}
         </div>
-        {lastThreeGain.length > 0 && !spinning &&
-          <p className={lastThreeGain[0] > 0 
-            ? 'text-[var(--mint)] mt-4 font-nunito border-dashed border-3 border-(--mint) rounded-3xl w-80 p-5 text-center' 
-            : 'text-[var(--red)] mt-4 font-nunito border-dashed border-3 border-(--red) rounded-3xl w-80 p-5 text-center'} > 
-            {lastThreeGain[0] < 0 ? '💀' : '🎉'} {lastThreeGain[0]} 🫘
-          </p>
-        }
-      </div>
-      <div className='flex flex-col gap-8 w-[400px]'>
-        <div className='bg-(--yel) rounded-[16px] h-30 flex flex-col items-center justify-center gap-4'>
-          <button
-          className="text-black text-4xl font-['Space_Mono',monospace] font-black cursor-pointer"
-          type='button' 
-          onClick={spin}
-          disabled={spinning}>
-            MIAULE
-          </button>
-          <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
-            espace = spin · lock 800ms
-          </p>
-        </div>
-        <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)]'>
-          <p className="font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase ">
-            log des 3 derniers spins
-          </p>
-          <div >
-            {lastThreeGain && lastThreeGain.map((gain) => (
-              <span className={gain > 0  
-                ? 'text-[var(--mint)] pr-10'
-                : 'text-[var(--red)] pr-10'}
-              >{gain}</span>
-            ))}
-          </div>
-          <div>
+      
 
-          </div>
-        </div>
-      </div>
     </div>
-
-    <div className='m-5'>
-      <h2 className="font-['Space_Mono',monospace] text-[16px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
-        Mise - 1 seul sélecteur
-      </h2>
-      <div className='flex flex-row gap-4'>
-      {slotMachine.slot_machine.bets.map((bet) => {
-        const isSelectioned = mise === bet
-        return <button
-            className={isSelectioned 
-              ? "rounded-full border-[var(--yel)] bg-[var(--yel)] border-3 h-20 w-20 cursor-pointer text-black font-['Space_Mono',monospace] font-extrabold text-base shadow-[3px_3px_0px_rgb(184,150,0)]" 
-              : 'rounded-full border-[var(--border)] border-3 h-20 w-20 cursor-pointer'}
-            type='button' 
-            key={bet} 
-            onClick={() => setMise(bet)}>
-              {bet}
-          </button>
-      })}
-      </div>
-    </div>
-
-    <div className='border-3 border-[var(--border)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--border)] w-200 m-5'>
-      <h2 className="font-['Space_Mono',monospace] text-[16px] tracking-[3px] text-[#555555] mb-4 uppercase ml-[36px]">
-        table des gain · statistiques
-      </h2>
-      {symbols.symbols.map((symbol) => (
-        <span key={symbol.id}>     {symbol.icon}x3 = {Math.floor(100/symbol.weight)}  /  </span>
-      ))}
-    </div>
-  
-
-</div>
   
   );
 }
