@@ -31,7 +31,7 @@ return (
         <h1 className="font-lilitaone text-[52px] text-[#dfb2f4]">
           {numberBuilding} bâtiments.<br />Rien de plus.
         </h1>
-        <div className="flex flex-col gap-[25px]">
+        <div className="flex flex-col gap-[25px] pb-[25px]">
           {buildings.map((building) => (
             <CardSection
               key={building.id} id={building.id} name={building.name} icon={building.icon} base_price={building.base_price} price_growth={building.price_growth} bonus_per_level={building.bonus_per_level} max_level={building.max_level} level={levels[building.id] ?? 0} onUpgrade={() => handleUpgrade(building)} currency={currency}

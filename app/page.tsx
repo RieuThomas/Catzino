@@ -93,7 +93,8 @@ export default function Home() {
 const pClass = "font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase"
 
   return (
-    <div>
+    <div className='flex flex-col'>
+      <h1 className='flex justify-center text-[100px] pb-[40px] font-lilitaone font-extrabold text-[#fcdc4d] [-webkit-text-stroke:5px_#06d6a0] [text-shadow:3px_3px_10px_#06d6a0]'>CATZINO</h1>
         <div className='flex flex-row justify-evenly'>
           <div className='border-3 border-[var(--lav)] rounded-[16px] p-[24px] shadow-[5px_5px_0px_var(--lav)] flex flex-col items-center min-h-[400px]'>
             <p className={pClass}>
