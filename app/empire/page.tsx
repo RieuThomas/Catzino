@@ -1,6 +1,7 @@
 "use client";
 import { useGame } from "@/app/contexts/gamecontext";
 import databuildings from "@/app/_data/buildings.json";
+import datacats from "@/app/_data/cats.json";
 import CardSection from "./_component/cardsection";
 import BonusInfos from "./_component/bonusinfos";
 
@@ -21,6 +22,10 @@ const buildingBonus = databuildings.buildings.reduce((total, building) => {
   const level = levels[building.id] ?? 0;
   return total + level * building.bonus_per_level;
 }, 0);
+
+const catsBonus = datacats.cats.reduce((total, cats) => {
+  return total + cats.passive_income;
+}, 0)
 
 const numberBuilding = Object.values(levels).filter((lvl) => lvl > 0).length;
 
@@ -45,7 +50,7 @@ return (
         </p>
         <div className="flex flex-col gap-[10px]">
           <BonusInfos text="bâtiments" value={Math.floor(buildingBonus*100)} />
-          <BonusInfos text="chats" value={cats.length} />
+          <BonusInfos text="chats" value={Math.floor(catsBonus)} />
           <div>
             <BonusInfos text="multiplier" value={Math.floor((1 + buildingBonus) * 100) / 100} />
           </div>
