@@ -47,9 +47,18 @@ export default function Home() {
     return 0
   }
 
-  function playSound() {
-    const audio = new Audio('/sounds/miaule.mp3')
+  function playSound(mode: string) {
+    let sound = ''
+    switch (mode) {
+      case 'play': sound = 'miaule'; break
+      case 'win': sound = 'win'; break
+      case 'loose': sound = 'loose'; break
+      default: sound = 'miaule'
+    }
+
+    const audio = new Audio(`/sounds/${sound}.mp3`)
     audio.play()
+
   }
 
   function spin() {
@@ -57,7 +66,7 @@ export default function Home() {
       return
     }
 
-    playSound()
+    playSound('play')
     setCroquette((prev) => prev - mise)
     setSpinning(true)
 
@@ -72,11 +81,13 @@ export default function Home() {
     if (gain > 0) {
       updateLastThreeGains(gain)
       spendCurrency(-gain)
+      playSound('win')
     } else {
       updateLastThreeGains(-mise)
+      playSound('loose')
     }
     addSpin()
-  }, 700)
+  }, 1000)
 }
 
 const pClass = "font-['Space_Mono',monospace] text-[12px] tracking-[3px] text-[#555555] mb-4 uppercase"
