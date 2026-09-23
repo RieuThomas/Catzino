@@ -16,7 +16,7 @@ export default function BuildingCard({id, name, icon, base_price, price_growth, 
     const displayName = level == 0 ? name : `${name} · Niveau ${level}`;
     const bonusText =
         level == 0 ? `+${bonus_per_level * 100}% gains · débloque à ${Math.floor(base_price * price_growth ** (level + 1))} 🫘`
-        : level < max_level ? `+${level * bonus_per_level * 100}% gains · améliorer ${Math.floor(base_price * price_growth ** (level + 1))} 🫘`
+        : level < max_level ? `+${Math.floor(level * bonus_per_level * 100)}% gains · améliorer ${Math.floor(base_price * price_growth ** (level + 1))} 🫘`
         : `+${bonus_per_level * 1000}% gains`;
     const buttonLabel = 
         level == 0 ? "Acheter" 
