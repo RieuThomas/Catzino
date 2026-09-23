@@ -93,6 +93,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
             case "specific_building_level":
                 isUnlock = (levelsRef.current[cat.unlock.building!] ?? 0) >= cat.unlock.value
                 break
+            case "buildings_at_level":
+                isUnlock = Object.values(levelsRef.current).filter((lvl) => lvl >= cat.unlock.level!).length >= cat.unlock.value
+                break
             case "all_buildings_level":
                 isUnlock = databuildings.buildings.every(
                     (building) => (levelsRef.current[building.id] ?? 0) >= cat.unlock.value

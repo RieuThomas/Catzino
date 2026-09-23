@@ -19,7 +19,7 @@ export default function Navbar() {
       {liens.map(({ href, label }) => {
         const isActive = pathname === href
         const classLink = `font-lilitaone font-bold text-[14px] px-[22px] py-[8px] rounded-[999px] cursor-pointor ${
-        pathname === href ? "bg-[#fcdc4d] text-[#0d0d1a] shadow-[3px_3px_0px_0px_#b89600] transition-transform duration-150 hover:-translate-y-[1px]"
+        isActive ? "bg-[#fcdc4d] text-[#0d0d1a] shadow-[3px_3px_0px_0px_#b89600] transition-transform duration-150 hover:-translate-y-[1px]"
         : "text-[#888888]"}`;
 
 
